@@ -9,6 +9,9 @@ use base qw(Slim::Utils::OS);
 
 use constant MAX_LOGSIZE => 1024*1024*1; # maximum log size: 1 MB
 
+
+
+
 sub name {
 	return 'piCore';
 }
@@ -94,7 +97,9 @@ sub dirsFor {
 	    
 		my $updateDir = '/tmp/slimupdate';
 
-		push @dirs, $updateDir;
+        mkdir $updateDir unless -d $updateDir;
+        	
+		@dirs = $updateDir;
                         
 	} else {
 
@@ -107,7 +112,10 @@ sub canAutoUpdate { 1 }
 sub runningFromSource { 0 }
 sub installerExtension { 'tgz' }
 sub installerOS { 'nocpan' }
+
 sub getUpdateParams {
+	Slim::Web::Pages->addPageFunction("html/docs/picore-update.html",\&picoreupdate);
+
 	return {
 		cb => sub {
 			my ($file) = @_;
@@ -115,7 +123,24 @@ sub getUpdateParams {
 			$::newVersion = Slim::Utils::Strings::string('PICORE_UPDATE_AVAILABLE', "$1 - $2", $file );
 		}
 	};
+
 }                                                                                               
+
+sub picoreupdate {
+	 my ($client, $params) = @_;
+
+# user pressed the "runUpdate" button:
+	if ( $params->{'runUpdate'} ) {
+	# it's time to run the update!
+	 mkdir '/tmp/test' unless -d '/tmp/test';
+	}
+
+	# here's how you define a variable accessible in the web skin:
+	$params->{'versionString'} = 'new Version';   ## Need to add code to show the new version.
+		
+	 return Slim::Web::HTTP::filltemplatefile('html/docs/picore-update.html', $params);    ##This needs show a different page.
+}
+
 
 sub logRotate
 {
@@ -125,10 +150,6 @@ sub logRotate
 	# only keep small log files (1MB) because they are in RAM
 	Slim::Utils::OS->logRotate($dir, MAX_LOGSIZE);
 }       
-
-sub restartServer { 1 }
-
-sub canRestartServer { 1 }
 
 sub ignoredItems {
 	return (

@@ -1,11 +1,13 @@
 [% pagetitle = 'How to update your Logitech Media Server on your piCore system' %]
 [% PROCESS helpheader.html %]
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 [% extension = installerFile.match('\.(tgz)$');
 IF extension;
 	distro = extension.0;
 END;
 %]
-
 <p>On piCore distributions we provide an automatic download of Logitech Media Server update installers. 
 These will update your local copy of LMS to the latest source coded.<p>
 
@@ -15,10 +17,15 @@ These will update your local copy of LMS to the latest source coded.<p>
 
 <p>Please execute the following steps to bring your Logitech Media Server installation up to date:</p> 
 
+test
+
 <ul style="direction: ltr;">
 	<li>Log in to your server machine using your username and password.</li>
 	<li>Run the following command to execute the installer</li>
 	<li><code>sudo [% distro == 'tgz' ? 'lms-update.sh ' : 'Error' %] </code></li>
 </ul>
-
+	<form method="get" action="picore-update.html"> Launch Self Updater<br>
+		<input type="checkbox" name="runUpdate" value="1"> Check box and Click Submit to start Update<br>
+		<input type="submit" value=Update to [% versionString %]</input>
+	</form>
 [% PROCESS helpfooter.html %]
