@@ -60,7 +60,7 @@ if [ -z "$RESUME" ]; then
 	echo
 	echo "${BLUE}###############################################################"
 	echo
-	echo "  This script will update the Logitech Media Server extension  "
+	echo "  This script will update the Lyrion Music Server extension  "
 	echo
 	usage
 	[ -n "$UNATTENDED" ] && echo "       Unattended Operation Enabled"
@@ -91,7 +91,7 @@ if [ -z "$RESUME" ]; then
 			if [ "$?" != "0" ]; then echo "${RED}Failed to load required extension!. ${NORMAL} Check by manually installing	extension openssl.tcz"; exit 1; fi
 		fi
 
-		echo "${GREEN}Updateing Script from Github..."
+		echo "${GREEN}Updating Script from Github..."
 		FILES="lms-update.sh"
 		for F in $FILES
 		do
@@ -120,7 +120,7 @@ if [ -z "$RESUME" ]; then
 fi
 
 if [ "$SKIPUPDATE" != "1" ]; then
-	echo "${GREEN}Updateing Slimserver customizations from Github..."
+	echo "${GREEN}Updating Slimserver customizations from Github..."
 	FILES="custom-strings.txt picore-update.html Custom.pm slimserver"
 	for F in $FILES
 	do
@@ -154,7 +154,7 @@ if [ "$LINK" = "0" ]; then
 #   No Update needed
 	if [ -z "$MANUAL" ]; then
 		echo
-		echo "${BLUE}No update link found.   THis either means that there is no update, or you do not have automatic update"
+		echo "${BLUE}No update link found. This either means that there is no update, or you do not have automatic update"
 		echo "checks and automatic downloads enabled in the LMS settings."
 		echo
 		echo "If you would like to manually check for updates using a static update check, please relaunch this script"
@@ -183,7 +183,7 @@ fi
 
 NEWUPDATE=`find ${DL_DIR} -name "*.tgz"`
 if [ -z $NEWUPDATE ]; then
-	echo "${BLUE}No Update Found, please make sure Automatic updates and Automatic Downloads are enable in LMS.${NORMAL}"
+	echo "${BLUE}No Update Found, please make sure Automatic Updates and Automatic Downloads are enabled in LMS.${NORMAL}"
 	echo
 	exit 0
 fi
@@ -327,7 +327,7 @@ echo "${BLUE}Press Enter to continue, or Ctrl-c to exit${NORMAL}"
 
 [ -z "$UNATTENDED" ] && read key
 
-echo "${GREEN}Creating extension, it may take a while ... especially on rpi 0/A/B/A+/B+"
+echo "${GREEN}Creating extension, it may take a while ... especially on RPi 0/A/B/A+/B+"
 
 mksquashfs $BUILD_DIR /tmp/slimserver.tcz -noappend -force-uid 0 -force-gid 50
 if [ "$?" != "0" ]; then 
